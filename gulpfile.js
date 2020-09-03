@@ -1,4 +1,3 @@
-const path = require('path');
 const {parallel, series, src, dest, watch} = require('gulp');
 const ejs = require('gulp-ejs');
 const sass = require('gulp-sass');
@@ -9,7 +8,6 @@ const postcss = require('gulp-postcss');
 const autoprefixer = require('autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 const cssnano = require('cssnano');
-const extractMediaQuery = require('postcss-extract-media-query');
 const imagemin = require('gulp-imagemin');
 const svgo = imagemin.svgo;
 const webp = require('imagemin-webp');
@@ -23,6 +21,7 @@ const babelify = require('babelify');
 const favicons = require('gulp-favicons');
 const plumber = require('gulp-plumber');
 const beep = require('beepbeep');
+const critical = require('critical').stream;
 const argv = require('minimist')(process.argv.slice(2));
 
 const errorHandler = (error) => {
@@ -43,6 +42,12 @@ const js = () => {
   );
 };
 
+const fonts = (cb) => {
+  src('src/assets/fonts/**/*')
+    .pipe(dest('public/fonts'));
+  cb();
+};
+
 const compressCSS = (cb) => {
   src('public/css/*.css')
     .pipe(plumber({errorHandler}))
@@ -57,37 +62,32 @@ const compressCSS = (cb) => {
 
 const compressJS = (cb) => {
   src('public/bundle.js')
+    .pipe(plumber({errorHandler}))
     .pipe(uglify())
     .pipe(dest('public'));
   cb();
 };
 
-const styles = (cb) => {
-  const plugins = [
-    autoprefixer(),
-    extractMediaQuery({
-      output: {
-        path: path.join(__dirname, 'public/css'),
-      },
-      queries: {
-        '(min-width: 576px)': '576px',
-        '(min-width: 768px)': '768px',
-        '(min-width: 992px)': '992px',
-        '(min-width: 1200px)': '1200px',
-      }
-    }),
-    // cssnano({
-    //   zindex: false
-    // })
-  ];
-
-  src('src/scss/*.scss')
-    .pipe(sourcemaps.init())
+const criticalCSS = (cb) => {
+  src('public/*.html')
     .pipe(plumber({errorHandler}))
+    .pipe(critical({
+      base: 'public',
+      inline: true,
+      css: ['public/*.css']
+    }))
+    .pipe(dest('public'));
+  cb();
+};
+
+const styles = (cb) => {
+  src('src/scss/*.scss')
+    .pipe(plumber({errorHandler}))
+    .pipe(sourcemaps.init())
     .pipe(sass({includePaths: ['node_modules']}))
-    .pipe(postcss(plugins))
+    .pipe(postcss([autoprefixer()]))
     .pipe(sourcemaps.write('./'))
-    .pipe(dest('public/css'))
+    .pipe(dest('public'))
     .pipe(browserSync.stream());
   cb();
 };
@@ -203,10 +203,11 @@ const build = series(
   favicon,
   svg,
   js,
+  fonts
 );
 
-if (argv.min) {
-  exports.build = series(build, compressCSS, compressJS);
+if (argv.prod) {
+  exports.build = series(build, compressCSS, compressJS, criticalCSS);
 } else {
   exports.build = build;
 }
