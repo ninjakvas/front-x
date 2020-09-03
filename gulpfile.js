@@ -49,14 +49,14 @@ const fonts = (cb) => {
 };
 
 const compressCSS = (cb) => {
-  src('public/css/*.css')
+  src('public/*.css')
     .pipe(plumber({errorHandler}))
     .pipe(postcss([
       cssnano({
         zindex: false
       })
     ]))
-    .pipe(dest('public/css'));
+    .pipe(dest('public'));
   cb();
 };
 
