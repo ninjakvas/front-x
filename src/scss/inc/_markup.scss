@@ -1,0 +1,93 @@
+@include scut-reset(semanticize paragraph);
+
+body {
+  background: #fff;
+}
+svg {
+  width: 1em;
+  height: 1em;
+  position: relative;
+  top: 0.125em;
+  fill: currentColor;
+}
+
+* {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input[placeholder] {
+  text-overflow: ellipsis;
+}
+
+input::placeholder {
+  text-overflow: ellipsis;
+}
+
+input,
+textarea {
+
+  &::placeholder {
+    transition: all .3s;
+    opacity: 0;
+  }
+
+  &:focus::placeholder {
+    transform: translateX(-10px);
+    opacity: 1;
+  }
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+article {
+  ul {
+    margin: 20px 0 20px 20px;
+  }
+
+  > li {
+    position: relative;
+    padding-left: 15px;
+    color: #333;
+
+    &:before {
+      content: "";
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      left: 0;
+      top: calc(50% - 3px);
+      background: $dark;
+    }
+  }
+}
+
+em {
+  font-style: italic;
+}
+
+a {
+  color: $blue;
+  text-decoration: none;
+  transition: color 0.25s;
+
+  &:hover,
+  &:focus {
+    color: $teal;
+  }
+}
+
+img {
+  width: 100%;
+}
+
+p {
+  color: $p_color;
+  margin: 0 0 1em;
+}

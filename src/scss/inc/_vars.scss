@@ -1,0 +1,31 @@
+/* bootstrap variables for reference
+$primary
+$secondary
+$success
+$info
+$warning
+$danger
+$light
+$dark
+$blue
+$indigo
+$purple
+$pink
+$red
+$orange
+$yellow
+$green
+$teal
+$cyan
+*/
+
+$p_color: #333;
+$spacer: 10px;
+$spacers: (
+  0: 0,
+  1: ($spacer * 1),
+  2: ($spacer * 2),
+  3: ($spacer * 3),
+  4: ($spacer * 4),
+  5: ($spacer * 5),
+);

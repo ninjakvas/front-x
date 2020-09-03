@@ -1,0 +1,29 @@
+<%- include('inc/header', {title: 'Example page'}) %>
+<main>
+  <div class="container">
+    <div class="slider-1">
+      <div>
+        <picture>
+          <source type="image/webp" srcset="img/image-1.webp">
+          <img src="img/image-1.jpg" alt="">
+        </picture>
+      </div>
+      <div>
+        <picture>
+          <source type="image/webp" srcset="img/image-1.webp">
+          <img src="img/image-1.jpg" alt="">
+        </picture>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <svg>
+      <use xlink:href="img/sprite.svg#search"></use>
+    </svg>
+    поиск
+    <br>
+    <a href="#">this is link</a>
+  </div>
+</main>
+<%- include('inc/footer') %>
