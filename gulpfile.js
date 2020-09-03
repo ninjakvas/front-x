@@ -166,7 +166,7 @@ const html = (cb) => {
 };
 
 const watcher = () => {
-  watch('src/assets/img/**/*.+(jpg|jpeg|png', series(images, imagesWebp, reload));
+  watch('src/assets/img/**/*.+(jpg|jpeg|png|svg', series(images, imagesWebp, reload));
   watch('src/assets/icons/*.svg', series(svg, reload));
   watch('src/assets/favicon.png', series(favicon, reload));
   watch('src/views/**/*.ejs', series(html, reload));
