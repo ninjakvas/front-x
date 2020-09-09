@@ -4,6 +4,7 @@ body {
   background: #fff;
   font-family: 'Roboto', sans-serif;
 }
+
 svg {
   width: 1em;
   height: 1em;
@@ -50,21 +51,21 @@ ul {
 article {
   ul {
     margin: 20px 0 20px 20px;
-  }
 
-  > li {
-    position: relative;
-    padding-left: 15px;
-    color: #333;
+    > li {
+      position: relative;
+      padding-left: 15px;
+      color: #333;
 
-    &:before {
-      content: "";
-      position: absolute;
-      width: 6px;
-      height: 6px;
-      left: 0;
-      top: calc(50% - 3px);
-      background: $dark;
+      &:before {
+        content: '';
+        position: absolute;
+        width: 6px;
+        height: 6px;
+        left: 0;
+        top: calc(50% - 3px);
+        background: $dark;
+      }
     }
   }
 }
