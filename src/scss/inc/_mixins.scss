@@ -35,3 +35,10 @@
     src: $src;
   }
 }
+
+@mixin clamp($lines: 3) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+}
